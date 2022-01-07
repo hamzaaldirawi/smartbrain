@@ -33,9 +33,7 @@ const app = express();
 app.use(express.json({extended: false})); // when send data from server we have to parse it
 app.use(cors()); // to use fetch in Frontend
 
-app.get('/', (req, res) => {
-    res.send(db.users);
-})
+
 app.post('/signin', (req, res) => {
     signin.handleSignin(req, res, db, bcrypt);
 });
