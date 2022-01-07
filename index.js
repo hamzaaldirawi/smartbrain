@@ -5,6 +5,7 @@ const cors = require('cors');
 const path = require('path');
 const knex = require('knex');
 const { ClarifaiStub, grpc } = require("clarifai-nodejs-grpc");
+const router = express.Router();
 
 const register = require('./controllers/register');
 const signin = require('./controllers/signin');
@@ -37,15 +38,15 @@ app.use(express.json({extended: false})); // when send data from server we have 
 app.use(cors()); // to use fetch in Frontend
 
 
-app.post('/signin', (req, res) => {
+router.post('/signin', (req, res) => {
     signin.handleSignin(req, res, db, bcrypt);
 });
 
-app.post('/register', (req, res) => {
+router.post('/register', (req, res) => {
     register.handleRegister(req, res, db, bcrypt, salt);
 });
 
-app.get('/profile/:id', (req, res) => {
+router.get('/profile/:id', (req, res) => {
     profile.handleProfile(req, res, db);
 });
 
@@ -53,7 +54,7 @@ app.put('/image', (req, res) => {
     image.handleImage(req, res, db);
 });
 
-app.post('/imageDetect', (req, res) => {
+router.post('/imageDetect', (req, res) => {
     detect.handleDetect(req, res, stub, metadata);
 })
 
