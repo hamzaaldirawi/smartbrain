@@ -27,7 +27,7 @@ const handleRegister = (req, res, db, bcrypt, salt) => {
         .catch(trx.rollback)
     })
     .catch(err => {
-        res.status(400).json('Error register')
+        res.status(400).json('Error register', err)
     });
 }
 
