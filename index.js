@@ -2,6 +2,7 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const cors = require('cors');
+const path = require('path');
 const knex = require('knex');
 const { ClarifaiStub, grpc } = require("clarifai-nodejs-grpc");
 
