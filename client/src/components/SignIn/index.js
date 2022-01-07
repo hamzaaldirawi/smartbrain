@@ -13,7 +13,7 @@ const SignIn = ({ loadUser, onRouteChange }) => {
     }
 
     const onSubmitSignIn = () => {
-        fetch('/signin', {
+        fetch('https://h-smartbrain.herokuapp.com/signin', {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'

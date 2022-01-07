@@ -18,7 +18,7 @@ const Register = ({ loadUser, onRouteChange }) => {
     }
 
     const onSubmitRegister = () => {
-        fetch('/register', {
+        fetch('https://h-smartbrain.herokuapp.com/register', {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'
