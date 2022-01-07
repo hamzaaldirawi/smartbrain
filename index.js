@@ -5,7 +5,6 @@ const cors = require('cors');
 const path = require('path');
 const knex = require('knex');
 const { ClarifaiStub, grpc } = require("clarifai-nodejs-grpc");
-const router = express.Router();
 
 const register = require('./controllers/register');
 const signin = require('./controllers/signin');
@@ -29,40 +28,39 @@ const db = knex({
     }
 });
 
-const saltRounds = 10;
-const salt = bcrypt.genSaltSync(saltRounds);
-
 const app = express();
 
 app.use(express.json({extended: false})); // when send data from server we have to parse it
 app.use(cors()); // to use fetch in Frontend
 
-
-app.use(router.post('/signin', (req, res) => {
+app.get('/', (req, res) => {
+    res.send(db.users);
+})
+app.post('/signin', (req, res) => {
     signin.handleSignin(req, res, db, bcrypt);
-}));
+});
 
-app.use(router.post('/register', (req, res) => {
-    register.handleRegister(req, res, db, bcrypt, salt);
-}));
+app.post('/register', (req, res) => {
+    register.handleRegister(req, res, db, bcrypt);
+});
 
-app.use(router.get('/profile/:id', (req, res) => {
+app.get('/profile/:id', (req, res) => {
     profile.handleProfile(req, res, db);
-}));
+});
 
-app.use(router.put('/image', (req, res) => {
+app.put('/image', (req, res) => {
     image.handleImage(req, res, db);
-}));
+});
 
-app.use(router.post('/imageDetect', (req, res) => {
+app.post('/imageDetect', (req, res) => {
     detect.handleDetect(req, res, stub, metadata);
-}));
+})
 
 if (process.env.NODE_ENV === 'production') {
     //set static folder
     app.use(express.static(path.join(__dirname, 'client', 'build')));
 
-    app.get('*', (req, res) => {
+    app.get('/', (req, res) => {
         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
     })
 }

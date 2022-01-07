@@ -1,8 +1,10 @@
-const handleRegister = (req, res, db, bcrypt, salt) => {
+const handleRegister = (req, res, db, bcrypt) => {
     const { email, name, password } = req.body;
     if(!email || !name || !password) {
         return res.json('Failed to register')
     }
+
+    const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt);
     // to connect to tables we use transaction and commit
     db.transaction(trx => {

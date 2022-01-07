@@ -70,7 +70,7 @@ const App = () => {
 
   const onPictureSubmit = () => {
     setImgUrl(input);
-    fetch('https://h-smartbrain.herokuapp.com/imageDetect', {
+    fetch('/imageDetect', {
       method: 'post',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({input})
@@ -78,7 +78,7 @@ const App = () => {
     .then(res => res.json())
     .then(data => {
       if(data) {
-        fetch('https://h-smartbrain.herokuapp.com/image', {
+        fetch('/image', {
           method: 'put',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({id: signInUser.id})
