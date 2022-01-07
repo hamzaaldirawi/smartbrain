@@ -13,7 +13,7 @@ const SignIn = ({ loadUser, onRouteChange }) => {
     }
 
     const onSubmitSignIn = () => {
-        fetch('http://localhost:8000/signin', {
+        fetch('/signin', {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'

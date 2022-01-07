@@ -13,17 +13,15 @@ const detect = require('./controllers/imageDetect');
 
 const stub = ClarifaiStub.grpc();
 const metadata = new grpc.Metadata();
-metadata.set("authorization", "Key 93a8f803e61e41f3a652d9f81d162b70");
+metadata.set("authorization", `Key ${process.env.API_CLARIFAI}`);
 
 const port = process.env.PORT || 8000;
+
 const db = knex({
     client: 'pg',
     connection: {
-      host : 'localhost',
-      port : 5432,
-      user : 'postgres',
-      password : '',
-      database : 'smart-brain'
+      connectionString : process.env.DATABASE_URL,
+      ssl: true
     }
 });
 
@@ -32,8 +30,9 @@ const salt = bcrypt.genSaltSync(saltRounds);
 
 const app = express();
 
-app.use(express.json()); // when send data from server we have to parse it
+app.use(express.json({extended: false})); // when send data from server we have to parse it
 app.use(cors()); // to use fetch in Frontend
+
 
 app.post('/signin', (req, res) => {
     signin.handleSignin(req, res, db, bcrypt);
@@ -55,6 +54,15 @@ app.post('/imageDetect', (req, res) => {
     detect.handleDetect(req, res, stub, metadata);
 })
 
+if (process.env.NODE_ENV === 'production') {
+    //set static folder
+    app.use(express.static('client/build'))
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+    })
+}
+
 app.listen(port, () => {
     console.log('app is running', port);
 });
@@ -66,3 +74,16 @@ app.listen(port, () => {
     /profile/:userId --> GET = user
     /image --> PUT = user
 */
+
+/* FOR LOCAL 
+const db = knex({
+    client: 'pg',
+    connection: {
+      host : 'localhost',
+      port : 5432,
+      user : 'postgres',
+      password : '',
+      database : 'smart-brain'
+    }
+});
+*/ 

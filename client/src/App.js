@@ -70,7 +70,7 @@ const App = () => {
 
   const onPictureSubmit = () => {
     setImgUrl(input);
-    fetch('http://localhost:8000/imageDetect', {
+    fetch('/imageDetect', {
       method: 'post',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({input})
@@ -78,7 +78,7 @@ const App = () => {
     .then(res => res.json())
     .then(data => {
       if(data) {
-        fetch('http://localhost:8000/image', {
+        fetch('/image', {
           method: 'put',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({id: signInUser.id})
