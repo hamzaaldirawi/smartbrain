@@ -38,31 +38,31 @@ app.use(express.json({extended: false})); // when send data from server we have 
 app.use(cors()); // to use fetch in Frontend
 
 
-router.post('/signin', (req, res) => {
+app.use(router.post('/signin', (req, res) => {
     signin.handleSignin(req, res, db, bcrypt);
-});
+}));
 
-router.post('/register', (req, res) => {
+app.use(router.post('/register', (req, res) => {
     register.handleRegister(req, res, db, bcrypt, salt);
-});
+}));
 
-router.get('/profile/:id', (req, res) => {
+app.use(router.get('/profile/:id', (req, res) => {
     profile.handleProfile(req, res, db);
-});
+}));
 
-app.put('/image', (req, res) => {
+app.use(router.put('/image', (req, res) => {
     image.handleImage(req, res, db);
-});
+}));
 
-router.post('/imageDetect', (req, res) => {
+app.use(router.post('/imageDetect', (req, res) => {
     detect.handleDetect(req, res, stub, metadata);
-})
+}));
 
 if (process.env.NODE_ENV === 'production') {
     //set static folder
     app.use(express.static(path.join(__dirname, 'client', 'build')));
 
-    app.get('/', (req, res) => {
+    app.get('*', (req, res) => {
         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
     })
 }
