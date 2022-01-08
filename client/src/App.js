@@ -71,12 +71,14 @@ const App = () => {
 
   const onPictureSubmit = () => {
     setImgUrl(input);
-    axios.post('https://h-smart-brain.herokuapp.com/imageDetect', {
+    fetch('https://h-smart-brain.herokuapp.com/imageDetect', {
+      method: 'post',
       headers: {'Content-Type': 'application/json'},
-      body: {input: imgUrl}
+      body: JSON.stringify({input})
     })
-    .then(res => {
-      if(res.data) {
+    .then(res => res.json())
+    .then(data => {
+      if(data) {
         axios.put('https://h-smart-brain.herokuapp.com/image', {
           headers: {'Content-Type': 'application/json'},
           body: {id: signInUser.id}
