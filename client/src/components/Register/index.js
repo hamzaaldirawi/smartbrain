@@ -14,21 +14,19 @@ const Register = ({ loadUser, onRouteChange }) => {
     }
 
     const onSubmitRegister = () => {
-        fetch('https://h-smart-brain.herokuapp.com/register', {
-            method: 'post',
+        axios.post('https://h-smart-brain.herokuapp.com/register', {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
+            body: {
                 name: userCred.name,
                 email: userCred.email,
                 password: userCred.password
-            })
+            }
         })
-        .then(res => res.json())
-        .then(data => {
-            if(data.id) {
-                    loadUser(data);
+        .then(res =>  {
+            if(res.data.id) {
+                    loadUser(res.data);
                     onRouteChange('home');   
                 }
         })

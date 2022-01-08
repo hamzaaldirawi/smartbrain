@@ -9,13 +9,12 @@ const handleRegister = (req, res, db, bcrypt) => {
     // to connect 2 tables we use transaction and commit
     
     // db.transaction(trx => {
-    //     db.insert({
+    //     trx.insert({
     //         hash: hash,
     //         email: email
     //     })
     //     .into('login')
     //     .returning('email')
-    //     .transaction(trx)
     //     .then(loginEmail => {
     //         db('users')
     //         .returning('*')
