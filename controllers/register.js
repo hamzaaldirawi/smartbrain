@@ -5,7 +5,7 @@ const handleRegister = (req, res, db, bcrypt) => {
     }
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt);
-    console.log(hash)
+    res.json(hash)
     // to connect to tables we use transaction and commit
     // db.transaction(trx => {
     //     trx.insert({
