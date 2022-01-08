@@ -15,14 +15,9 @@ const Register = ({ loadUser, onRouteChange }) => {
 
     const onSubmitRegister = () => {
         axios.post('https://h-smart-brain.herokuapp.com/register', {
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: {
-                name: userCred.name,
-                email: userCred.email,
-                password: userCred.password
-            }
+            name: userCred.name,
+            email: userCred.email,
+            password: userCred.password
         })
         .then(res =>  {
             if(res.data.id) {

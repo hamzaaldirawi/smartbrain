@@ -15,13 +15,8 @@ const SignIn = ({ loadUser, onRouteChange }) => {
 
     const onSubmitSignIn = () => {
         axios.post('https://h-smart-brain.herokuapp.com/signin', {
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: {
-                email: signInEmail,
-                password: signInPassword
-            }
+            email: signInEmail,
+            password: signInPassword
         })
         .then(res => {
             //if(res.data.id) {
