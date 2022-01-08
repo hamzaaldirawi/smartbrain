@@ -3,34 +3,34 @@ const handleRegister = (req, res, db, bcrypt) => {
     if(!email || !name || !password) {
         return res.json('Failed to register')
     }
-
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt);
+    console.log(hash)
     // to connect to tables we use transaction and commit
-    db.transaction(trx => {
-        trx.insert({
-            hash: hash,
-            email: email
-        })
-        .into('login')
-        .returning('email')
-        .then(loginEmail => {
-            trx('users')
-            .returning('*')
-            .insert({
-                email: loginEmail[0],
-                name: name,
-                joined: new Date()
-            }).then(user => {
-                res.json(user[0])
-            })
-        })
-        .then(trx.commit)
-        .catch(trx.rollback)
-    })
-    .catch(err => {
-        res.status(400).json('Error register')
-    });
+    // db.transaction(trx => {
+    //     trx.insert({
+    //         hash: hash,
+    //         email: email
+    //     })
+    //     .into('login')
+    //     .returning('email')
+    //     .then(loginEmail => {
+    //         trx('users')
+    //         .returning('*')
+    //         .insert({
+    //             email: loginEmail[0],
+    //             name: name,
+    //             joined: new Date()
+    //         }).then(user => {
+    //             res.json(user[0])
+    //         })
+    //     })
+    //     .then(trx.commit)
+    //     .catch(trx.rollback)
+    // })
+    // .catch(err => {
+    //     res.status(400).json('Error register')
+    // });
 }
 
 module.exports = {
