@@ -14,22 +14,41 @@ const Register = ({ loadUser, onRouteChange }) => {
     }
 
     const onSubmitRegister = () => {
-        axios.post('https://h-smart-brain.herokuapp.com/register', {
+        fetch('https://h-smart-brain.herokuapp.com/register', {
+            method: 'post',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: {
+            body: JSON.stringify({
                 name: userCred.name,
                 email: userCred.email,
                 password: userCred.password
-            }
+            })
         })
-        .then(res => {
-            if(res.data.id) {
-                    loadUser(res.data);
+        .then(res => res.json())
+        .then(data => {
+            if(data.id) {
+                    loadUser(data);
                     onRouteChange('home');   
                 }
         })
+    // const onSubmitRegister = () => {
+    //     axios.post('https://h-smart-brain.herokuapp.com/register', {
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: {
+    //             name: userCred.name,
+    //             email: userCred.email,
+    //             password: userCred.password
+    //         }
+    //     })
+    //     .then(res => {
+    //         if(res.data.id) {
+    //                 loadUser(res.data);
+    //                 onRouteChange('home');   
+    //             }
+    //     })
         //.then(data => { console.log(data)
             // if(data.id) {
             //     loadUser(data);

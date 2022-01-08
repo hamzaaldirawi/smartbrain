@@ -6,16 +6,18 @@ const handleRegister = (req, res, db, bcrypt) => {
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt);
     res.json(hash)
-    // to connect to tables we use transaction and commit
+    // to connect 2 tables we use transaction and commit
+    
     // db.transaction(trx => {
-    //     trx.insert({
+    //     db.insert({
     //         hash: hash,
     //         email: email
     //     })
     //     .into('login')
     //     .returning('email')
+    //     .transaction(trx)
     //     .then(loginEmail => {
-    //         trx('users')
+    //         db('users')
     //         .returning('*')
     //         .insert({
     //             email: loginEmail[0],

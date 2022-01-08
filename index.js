@@ -28,30 +28,6 @@ const db = knex({
     }
 });
 
-// const db = knex({
-//     client: 'pg',
-//     connection: {
-//       host : 'ec2-34-206-245-175.compute-1.amazonaws.com',
-//       port : 5432,
-//       user : 'iouftabgbjmnbn',
-//       password : 'ab9a0f976da07b8c88498f253eb044df63b00feedf64846e0b5bb020ba459b36',
-//       database : 'd41k1prmmopj0h'
-//     }
-// });
-
-// const db = knex({
-//     client: 'pg',
-//     connection: {
-//       host : 'localhost',
-//       port : 5432,
-//       user : 'postgres',
-//       password : '',
-//       database : 'smart-brain'
-//     }
-// });
-
-
-
 const app = express();
 
 app.use(express.json()); // when send data from server we have to parse it
