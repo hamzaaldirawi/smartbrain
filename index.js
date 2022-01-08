@@ -19,7 +19,7 @@ metadata.set("authorization", `Key ${process.env.API_CLARIFAI}`);
 const PORT = process.env.PORT || 8000;
 
 const db = knex({
-    client: 'pg',
+    client: 'postgres',
     connection: {
       connectionString : process.env.DATABASE_URL,
       ssl: {
