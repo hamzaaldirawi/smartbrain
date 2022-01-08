@@ -18,13 +18,24 @@ metadata.set("authorization", `Key ${process.env.API_CLARIFAI}`);
 
 const PORT = process.env.PORT || 8000;
 
+// const db = knex({
+//     client: 'pg',
+//     connection: {
+//       connectionString : process.env.DATABASE_URL,
+//       ssl: {
+//         rejectUnauthorized: false
+//       }
+//     }
+// });
+
 const db = knex({
     client: 'pg',
     connection: {
-      connectionString : process.env.DATABASE_URL,
-      ssl: {
-        rejectUnauthorized: false
-      }
+      host : 'ec2-34-206-245-175.compute-1.amazonaws.com',
+      port : 5432,
+      user : 'iouftabgbjmnbn',
+      password : 'ab9a0f976da07b8c88498f253eb044df63b00feedf64846e0b5bb020ba459b36',
+      database : 'd41k1prmmopj0h'
     }
 });
 
