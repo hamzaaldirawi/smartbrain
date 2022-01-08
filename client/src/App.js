@@ -73,7 +73,7 @@ const App = () => {
     setImgUrl(input);
     axios.post('https://h-smart-brain.herokuapp.com/imageDetect', {
       headers: {'Content-Type': 'application/json'},
-      body: {input}
+      body: {input: imgUrl}
     })
     .then(res => {
       if(res.data) {
