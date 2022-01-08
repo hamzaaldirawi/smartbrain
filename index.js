@@ -60,6 +60,15 @@ app.post('/imageDetect', (req, res) => {
     detect.handleDetect(req, res, stub, metadata);
 })
 
+if (process.env.NODE_ENV === 'production') {
+    //set static folder
+    app.use(express.static(path.join(__dirname, 'client/build', 'build')));
+
+    app.get('/', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+    })
+}
+
 app.listen(PORT, () => {
     console.log('app is running', PORT);
 });
