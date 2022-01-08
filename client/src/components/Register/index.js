@@ -21,7 +21,8 @@ const Register = ({ loadUser, onRouteChange }) => {
         fetch('/register', {
             method: 'post',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Host': 'https://h-smart-brain.herokuapp.com/'
             },
             body: JSON.stringify({
                 name: signInName,
