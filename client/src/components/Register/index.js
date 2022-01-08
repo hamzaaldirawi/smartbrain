@@ -1,42 +1,41 @@
+import axios from 'axios';
 import { useState } from 'react';
 
 const Register = ({ loadUser, onRouteChange }) => {
-    const [signInName, setSignInName] = useState();
-    const [signInEmail, setSignInEmail] = useState();
-    const [signInPassword, setSignInPassword] = useState();
+    const [userCred, setUserCred] = useState({
+        name: '',
+        email: '',
+        password: ''
+    })
 
-    const onNameChange = (e) => {
-        setSignInName(e.target.value);
-    }
-
-    const onEmailChange = (e) => {
-        setSignInEmail(e.target.value);
-    }
-
-    const onPasswordChange = (e) => {
-        setSignInPassword(e.target.value);
+    const handleChange = (e) => {
+        const {name, value} = e.target
+        setUserCred({...userCred, [name]: value});
     }
 
     const onSubmitRegister = () => {
-        fetch('/register', {
-            method: 'post',
+        axios.post('https://h-smart-brain.herokuapp.com/register', {
             headers: {
-                'Content-Type': 'application/json',
-                'Host': 'https://h-smart-brain.herokuapp.com/'
+                'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                name: signInName,
-                email: signInEmail,
-                password: signInPassword
-            })
-        })
-        .then(res => res.json())
-        .then(data => {
-            if(data.id) {
-                loadUser(data);
-                onRouteChange('home');   
+            body: {
+                name: userCred.name,
+                email: userCred.email,
+                password: userCred.password
             }
         })
+        .then(res => {
+            if(res.data.id) {
+                    loadUser(res.data);
+                    onRouteChange('home');   
+                }
+        })
+        //.then(data => { console.log(data)
+            // if(data.id) {
+            //     loadUser(data);
+            //     onRouteChange('home');   
+            // }
+        //})
     }
 
     return (
@@ -52,16 +51,16 @@ const Register = ({ loadUser, onRouteChange }) => {
                                 name="name"  
                                 id="name"
                                 required
-                                onChange={onNameChange} />
+                                onChange={handleChange} />
                         </div>
                         <div className="mt3">
-                            <label className="db fw6 lh-copy f6" htmlFor="email-address">Email</label>
+                            <label className="db fw6 lh-copy f6" htmlFor="email">Email</label>
                             <input className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
                                 type="email" 
-                                name="email-address"  
-                                id="email-address" 
+                                name="email"  
+                                id="email" 
                                 required
-                                onChange={onEmailChange} />
+                                onChange={handleChange} />
                         </div>
                         <div className="mv3">
                             <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
@@ -70,7 +69,7 @@ const Register = ({ loadUser, onRouteChange }) => {
                                 name="password"  
                                 id="password" 
                                 required
-                                onChange={onPasswordChange} />
+                                onChange={handleChange} />
                         </div>
                     </fieldset>
                     <div className="">

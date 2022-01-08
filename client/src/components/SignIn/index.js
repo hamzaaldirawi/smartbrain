@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react"
 
 const SignIn = ({ loadUser, onRouteChange }) => {
@@ -13,24 +14,27 @@ const SignIn = ({ loadUser, onRouteChange }) => {
     }
 
     const onSubmitSignIn = () => {
-        fetch('/signin', {
-            method: 'post',
+        axios.post('https://h-smart-brain.herokuapp.com/signin', {
             headers: {
-                'Content-Type': 'application/json',
-                'Host': 'https://h-smart-brain.herokuapp.com/'
+                'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
+            body: {
                 email: signInEmail,
                 password: signInPassword
-            })
+            }
         })
-        .then(res => res.json())
-        .then(data => {
-            if(data.id) {
-                loadUser(data)
+        .then(res => {
+            if(res.data.id) {
+                loadUser(res.data)
                 onRouteChange('home')
             }
         })
+        // .then(data => {
+        //     if(data.id) {
+        //         loadUser(data)
+        //         onRouteChange('home')
+        //     }
+        // })
     }
 
     return (

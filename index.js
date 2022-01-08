@@ -18,26 +18,38 @@ metadata.set("authorization", `Key ${process.env.API_CLARIFAI}`);
 
 const PORT = process.env.PORT || 8000;
 
-// const db = knex({
-//     client: 'pg',
-//     connection: {
-//       connectionString : process.env.DATABASE_URL,
-//       ssl: {
-//         rejectUnauthorized: false
-//       }
-//     }
-// });
-
 const db = knex({
     client: 'pg',
     connection: {
-      host : 'ec2-34-206-245-175.compute-1.amazonaws.com',
-      port : 5432,
-      user : 'iouftabgbjmnbn',
-      password : 'ab9a0f976da07b8c88498f253eb044df63b00feedf64846e0b5bb020ba459b36',
-      database : 'd41k1prmmopj0h'
+      connectionString : process.env.DATABASE_URL,
+      ssl: {
+        rejectUnauthorized: false
+      }
     }
 });
+
+// const db = knex({
+//     client: 'pg',
+//     connection: {
+//       host : 'ec2-34-206-245-175.compute-1.amazonaws.com',
+//       port : 5432,
+//       user : 'iouftabgbjmnbn',
+//       password : 'ab9a0f976da07b8c88498f253eb044df63b00feedf64846e0b5bb020ba459b36',
+//       database : 'd41k1prmmopj0h'
+//     }
+// });
+
+// const db = knex({
+//     client: 'pg',
+//     connection: {
+//       host : 'localhost',
+//       port : 5432,
+//       user : 'postgres',
+//       password : '',
+//       database : 'smart-brain'
+//     }
+// });
+
 
 
 const app = express();
@@ -45,11 +57,11 @@ const app = express();
 app.use(express.json()); // when send data from server we have to parse it
 app.use(cors()); // to use fetch in Frontend
 
-app.use(express.static(path.join(__dirname, 'client', 'build')));
+// app.use(express.static(path.join(__dirname, 'client', 'build')));
 
-app.get('/', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
-})
+// app.get('/', (req, res) => {
+//     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+// })
 
 app.post('/signin', (req, res) => {
     signin.handleSignin(req, res, db, bcrypt);
@@ -70,15 +82,6 @@ app.put('/image', (req, res) => {
 app.post('/imageDetect', (req, res) => {
     detect.handleDetect(req, res, stub, metadata);
 })
-
-if (process.env.NODE_ENV === 'production') {
-    //set static folder
-    app.use(express.static(path.join(__dirname, 'client/build', 'build')));
-
-    app.get('/', (req, res) => {
-        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
-    })
-}
 
 app.listen(PORT, () => {
     console.log('app is running', PORT);
