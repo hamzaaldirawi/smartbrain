@@ -1,5 +1,5 @@
 const handleRegister = (req, res, db, bcrypt) => {
-    const { email, name, password } = req.body;
+    const { email, name, password } = req;
     if(!email || !name || !password) {
         return res.json('Failed to register')
     }

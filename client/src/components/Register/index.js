@@ -21,9 +21,9 @@ const Register = ({ loadUser, onRouteChange }) => {
         })
         .then(res =>  {
             if(res.data.id) {
-                    loadUser(res.data);
-                    onRouteChange('home');   
-                }
+                loadUser(res.data);
+                onRouteChange('home');   
+            }
         })
     // const onSubmitRegister = () => {
     //     axios.post('https://h-smart-brain.herokuapp.com/register', {

@@ -1,5 +1,5 @@
 const handleSignin = (req, res, db, bcrypt) => {
-    const { email, password } = req.body;
+    const { email, password } = req;
     if(!email || !password) {
         return res.json('Failed to sign in');
     }
