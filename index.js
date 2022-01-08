@@ -16,7 +16,7 @@ const stub = ClarifaiStub.grpc();
 const metadata = new grpc.Metadata();
 metadata.set("authorization", `Key ${process.env.API_CLARIFAI}`);
 
-const port = process.env.PORT || 8000;
+const PORT = process.env.PORT || 8000;
 
 const db = knex({
     client: 'pg',
@@ -28,11 +28,17 @@ const db = knex({
     }
 });
 
+
 const app = express();
 
-app.use(express.json({extended: false})); // when send data from server we have to parse it
+app.use(express.json()); // when send data from server we have to parse it
 app.use(cors()); // to use fetch in Frontend
 
+app.use(express.static(path.join(__dirname, 'client', 'build')));
+
+app.get('/', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+})
 
 app.post('/signin', (req, res) => {
     signin.handleSignin(req, res, db, bcrypt);
@@ -54,17 +60,8 @@ app.post('/imageDetect', (req, res) => {
     detect.handleDetect(req, res, stub, metadata);
 })
 
-if (process.env.NODE_ENV === 'production') {
-    //set static folder
-    app.use(express.static(path.join(__dirname, 'client', 'build')));
-
-    app.get('/', (req, res) => {
-        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
-    })
-}
-
-app.listen(port, () => {
-    console.log('app is running', port);
+app.listen(PORT, () => {
+    console.log('app is running', PORT);
 });
 
 /*
