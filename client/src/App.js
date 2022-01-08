@@ -1,4 +1,5 @@
 import { Fragment, useState } from 'react';
+import axios from 'axios';
 import Particles from 'react-tsparticles';
 import Navigation from './components/Navigation';
 import Logo from './components/Logo';
@@ -70,26 +71,22 @@ const App = () => {
 
   const onPictureSubmit = () => {
     setImgUrl(input);
-    fetch('/imageDetect', {
-      method: 'post',
+    axios.post('https://h-smart-brain.herokuapp.com/imageDetect', {
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({input})
+      body: {input}
     })
-    .then(res => res.json())
-    .then(data => {
-      if(data) {
-        fetch('/image', {
-          method: 'put',
+    .then(res => {
+      if(res.data) {
+        axios.put('https://h-smart-brain.herokuapp.com/image', {
           headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({id: signInUser.id})
+          body: {id: signInUser.id}
         })
-        .then(res => res.json())
-        .then(count => {
-          setSignInUser(Object.assign(signInUser, {entries: count}))
+        .then(res => {
+          setSignInUser(Object.assign(signInUser, {entries: res.count}))
         })
         .catch(console.log)
       }
-      displayBox(faceLocation(data))
+      displayBox(faceLocation(res.data))
     })  
   }
 
