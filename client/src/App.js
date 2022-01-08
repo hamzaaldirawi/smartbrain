@@ -71,16 +71,10 @@ const App = () => {
 
   const onPictureSubmit = () => {
     setImgUrl(input);
-    axios.post('https://h-smart-brain.herokuapp.com/imageDetect', {
-      headers: {'Content-Type': 'application/json'},
-      body: {input}
-    })
+    axios.post('https://h-smart-brain.herokuapp.com/imageDetect', {input})
     .then(res => {
       if(res.data) {
-        axios.put('https://h-smart-brain.herokuapp.com/image', {
-          headers: {'Content-Type': 'application/json'},
-          body: {id: signInUser.id}
-        })
+        axios.put('https://h-smart-brain.herokuapp.com/image', {id: signInUser.id})
         .then(res => {
           setSignInUser(Object.assign(signInUser, {entries: res.count}))
         })
