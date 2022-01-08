@@ -57,11 +57,11 @@ const app = express();
 app.use(express.json()); // when send data from server we have to parse it
 app.use(cors()); // to use fetch in Frontend
 
-// app.use(express.static(path.join(__dirname, 'client', 'build')));
+app.use(express.static(path.join(__dirname, 'client', 'build')));
 
-// app.get('/', (req, res) => {
-//     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
-// })
+app.get('/', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+})
 
 app.post('/signin', (req, res) => {
     signin.handleSignin(req, res, db, bcrypt);
