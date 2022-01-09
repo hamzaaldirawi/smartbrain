@@ -78,7 +78,7 @@ const App = () => {
         .then(res => {
           setSignInUser(Object.assign(signInUser, {entries: res.count}))
         })
-        .catch(console.log)
+        .catch(err => console.log(err))
       }
       displayBox(faceLocation(res.data))
     })  

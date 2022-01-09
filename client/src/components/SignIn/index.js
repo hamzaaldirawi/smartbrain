@@ -19,10 +19,10 @@ const SignIn = ({ loadUser, onRouteChange }) => {
             password: signInPassword
         })
         .then(res => {
-            //if(res.data.id) {
+            if(res.data.id) {
                 loadUser(res.data)
                 onRouteChange('home')
-            //}
+            }
         })
         // .then(data => {
         //     if(data.id) {
