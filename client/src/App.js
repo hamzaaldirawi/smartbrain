@@ -48,8 +48,8 @@ const App = () => {
     setInput(e.target.value);
   }
 
-  const loadUser = (data) => {
-    setSignInUser(data)
+  const loadUser = (user) => {
+    setSignInUser(user)
   }
 
   const faceLocation = (data) => {
