@@ -1,6 +1,7 @@
 # SMART BRAIN
 
 This project for detect face in images using AI.
+
 This project built using: 
     -- Node.js -> Express.js
     -- React
@@ -11,7 +12,7 @@ This project built using:
 
 ## To use the project 
 
-### Clone the projct
-### `npm install`
-### cd client then `npm install`
-### `npm run dev` in root directory to run the project localy.
+    -- Clone the projct
+    -- `npm install`
+    -- cd client then `npm install`
+    -- `npm run dev` in root directory to run the project localy.
